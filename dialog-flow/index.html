@@ -1,0 +1,28 @@
+<!-- Use this html file to try out Dialog Flow Messenger -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+  </head>
+  <body>
+    <div>
+      <h1>Zaaika Food Ordering Chatbot</h1>
+      <!-- hero -->
+      <h1>Welcome to Zaaika</h1>
+      <p>Order your favorite food with ease!</p>
+      <button class="btn">Get Started</button>
+    </div>
+    <div>
+      <df-messenger
+        intent="WELCOME"
+        chat-title="shenky"
+        agent-id="6b9b87c0-db26-4154-9a0c-b64fd86829f4"
+        language-code="en"
+      ></df-messenger>
+    </div>
+  </body>
+</html>

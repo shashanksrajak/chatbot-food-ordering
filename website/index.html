@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Shenky's Cafe - AI Chatbot Food Ordering Platform by Shashank Rajak
+    </title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1><i class="fas fa-utensils"></i>Shenky's Cafe</h1>
+        <p>Authentic Indian Cuisine Delivered to Your Doorstep</p>
+        <div class="header-buttons">
+          <button class="btn" id="cart-btn">
+            <i class="fas fa-shopping-cart"></i> Cart (0)
+          </button>
+          <button class="btn">Sign In</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <h2>Experience the Rich Flavors of India</h2>
+        <p>Order now and get 15% off on your first order!</p>
+      </div>
+    </section>
+
+    <section class="menu">
+      <div class="container">
+        <h2 class="section-title">Our Menu</h2>
+        <div id="menu-container">
+          <!-- Menu items will be dynamically added here -->
+        </div>
+      </div>
+    </section>
+
+    <section class="cart-modal" id="cart-modal">
+      <div class="cart-content">
+        <span class="close-cart">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items">
+          <!-- Cart items will be added here -->
+          <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-total">
+          <p>Total: ₹<span id="total-price">0</span></p>
+          <button class="btn checkout-btn">Checkout</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Spice Delight</h3>
+            <p>Bringing authentic Indian flavors to your home since 2020.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-phone"></i> +91-9876543210</p>
+            <p><i class="fas fa-envelope"></i> info@spicedelight.com</p>
+          </div>
+          <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2025 Spice Delight. All rights reserved.</p>
+        </div>
+      </div>
+      <div>
+        <df-messenger
+          intent="WELCOME"
+          chat-title="shenky"
+          agent-id="6b9b87c0-db26-4154-9a0c-b64fd86829f4"
+          language-code="en"
+        ></df-messenger>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
