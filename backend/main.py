@@ -207,7 +207,7 @@ def complete_order(session_id: str):
 
 def main():
     print("Hello from backend!")
-    uvicorn.run(app, host="::", port=7001)
+    uvicorn.run(app, host="0.0.0.0", port=7001)
 
 
 if __name__ == "__main__":
