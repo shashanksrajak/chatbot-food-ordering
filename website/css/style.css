@@ -202,6 +202,41 @@ header p {
   background-color: #e0b50a;
 }
 
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  position: relative;
+}
+
+.loading-spinner::after {
+  content: "";
+  border: 5px solid #eee;
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* Cart Modal */
 .cart-modal {
   display: none;

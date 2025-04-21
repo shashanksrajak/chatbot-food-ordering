@@ -1,107 +1,6 @@
-// Menu Items
-const menuItems = [
-    {
-        id: 1,
-        name: "Butter Chicken",
-        description: "Tender chicken cooked in a rich and creamy tomato-based sauce with butter and spices.",
-        price: 299,
-        image: "images/butter-chicken.jpg",
-        category: "main-course"
-    },
-    {
-        id: 2,
-        name: "Paneer Tikka",
-        description: "Marinated cottage cheese cubes grilled to perfection with bell peppers and onions.",
-        price: 249,
-        image: "images/paneer-tikka.jpg",
-        category: "starters"
-    },
-    {
-        id: 3,
-        name: "Vegetable Biryani",
-        description: "Fragrant basmati rice cooked with mixed vegetables and aromatic spices.",
-        price: 199,
-        image: "images/veg-biryani.jpg",
-        category: "main-course"
-    },
-    {
-        id: 4,
-        name: "Naan",
-        description: "Soft and fluffy traditional Indian bread baked in a tandoor.",
-        price: 49,
-        image: "images/naan.jpg",
-        category: "breads"
-    },
-    {
-        id: 5,
-        name: "Gulab Jamun",
-        description: "Deep-fried milk solids soaked in sugar syrup, served warm.",
-        price: 99,
-        image: "images/gulab-jamun.jpg",
-        category: "desserts"
-    },
-    {
-        id: 6,
-        name: "Masala Chai",
-        description: "Traditional Indian spiced tea with milk and a blend of aromatic spices.",
-        price: 59,
-        image: "images/masala-chai.jpg",
-        category: "beverages"
-    },
-    {
-        id: 7,
-        name: "Chicken Biryani",
-        description: "Aromatic basmati rice layered with tender chicken and fragrant spices.",
-        price: 249,
-        image: "images/chicken-biryani.jpg",
-        category: "main-course"
-    },
-    {
-        id: 8,
-        name: "Samosa",
-        description: "Crispy pastry filled with spiced potatoes and peas, deep-fried to golden perfection.",
-        price: 79,
-        image: "images/samosa.jpg",
-        category: "starters"
-    },
-    {
-        id: 9,
-        name: "Palak Paneer",
-        description: "Cottage cheese cubes in a creamy spinach gravy flavored with aromatic spices.",
-        price: 219,
-        image: "images/palak-paneer.jpg",
-        category: "main-course"
-    },
-    {
-        id: 10,
-        name: "Garlic Naan",
-        description: "Soft Indian bread topped with garlic and butter, baked in a tandoor.",
-        price: 69,
-        image: "images/garlic-naan.jpg",
-        category: "breads"
-    },
-    {
-        id: 11,
-        name: "Rasgulla",
-        description: "Soft and spongy cottage cheese balls soaked in sugar syrup.",
-        price: 89,
-        image: "images/rasgulla.jpg",
-        category: "desserts"
-    },
-    {
-        id: 12,
-        name: "Mango Lassi",
-        description: "Refreshing yogurt-based drink made with ripe mangoes and a hint of cardamom.",
-        price: 79,
-        image: "images/mango-lassi.jpg",
-        category: "beverages"
-    }
-];
-
 // DOM elements
 const menuContainer = document.getElementById('menu-container');
 const cartBtn = document.getElementById('cart-btn');
-const cartModal = document.getElementById('cart-modal');
 const cartModal = document.getElementById('cart-modal');
 const closeCart = document.querySelector('.close-cart');
 const cartItems = document.getElementById('cart-items');
@@ -109,8 +8,162 @@ const totalPriceElement = document.getElementById('total-price');
 const emptyCartMessage = document.querySelector('.empty-cart');
 
 // Global variables
+let menuItems = [];
 let cart = [];
 let currentCategory = 'all';
+
+// Fetch menu items from API
+async function fetchMenuItems() {
+    try {
+        // Get the API endpoint from environment variables or fallback to a default
+        const apiEndpoint = process.env.API_ENDPOINT;
+        console.log(apiEndpoint)
+
+        const response = await fetch(apiEndpoint);
+
+        console.log(response)
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Check if the response has the expected structure
+        if (data && data.food_items && Array.isArray(data.food_items)) {
+            menuItems = data.food_items.map(item => ({
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                price: item.price,
+                image: `images/${item.image}`,
+                category: getCategoryFromDescription(item.description)
+            }));
+
+            displayMenuItems();
+        } else {
+            throw new Error('Invalid data format received from API');
+        }
+    } catch (error) {
+        console.error('Error fetching menu items:', error);
+        // Fallback to hardcoded menu if API fails
+        useFallbackMenu();
+        displayMenuItems();
+    }
+}
+
+// Function to determine category based on description (as a fallback)
+function getCategoryFromDescription(description) {
+    const lowerDesc = description.toLowerCase();
+
+    if (lowerDesc.includes('starter') || lowerDesc.includes('appetizer') || lowerDesc.includes('snack')) {
+        return 'starters';
+    } else if (lowerDesc.includes('bread') || lowerDesc.includes('naan') || lowerDesc.includes('roti')) {
+        return 'breads';
+    } else if (lowerDesc.includes('dessert') || lowerDesc.includes('sweet')) {
+        return 'desserts';
+    } else if (lowerDesc.includes('drink') || lowerDesc.includes('beverage') || lowerDesc.includes('lassi')) {
+        return 'beverages';
+    } else {
+        return 'main-course'; // Default category
+    }
+}
+
+// Fallback menu in case API fails
+function useFallbackMenu() {
+    console.log('Using fallback menu data');
+    menuItems = [
+
+        {
+            id: 2,
+            name: "Paneer Tikka",
+            description: "Marinated cottage cheese cubes grilled to perfection with bell peppers and onions.",
+            price: 249,
+            image: "images/paneer-tikka.jpg",
+            category: "starters"
+        },
+        {
+            id: 3,
+            name: "Vegetable Biryani",
+            description: "Fragrant basmati rice cooked with mixed vegetables and aromatic spices.",
+            price: 199,
+            image: "images/veg-biryani.jpg",
+            category: "main-course"
+        },
+        {
+            id: 4,
+            name: "Naan",
+            description: "Soft and fluffy traditional Indian bread baked in a tandoor.",
+            price: 49,
+            image: "images/naan.jpg",
+            category: "breads"
+        },
+        {
+            id: 5,
+            name: "Gulab Jamun",
+            description: "Deep-fried milk solids soaked in sugar syrup, served warm.",
+            price: 99,
+            image: "images/gulab-jamun.jpg",
+            category: "desserts"
+        },
+        {
+            id: 6,
+            name: "Masala Chai",
+            description: "Traditional Indian spiced tea with milk and a blend of aromatic spices.",
+            price: 59,
+            image: "images/masala-chai.jpg",
+            category: "beverages"
+        },
+        {
+            id: 7,
+            name: "Chicken Biryani",
+            description: "Aromatic basmati rice layered with tender chicken and fragrant spices.",
+            price: 249,
+            image: "images/chicken-biryani.jpg",
+            category: "main-course"
+        },
+        {
+            id: 8,
+            name: "Samosa",
+            description: "Crispy pastry filled with spiced potatoes and peas, deep-fried to golden perfection.",
+            price: 79,
+            image: "images/samosa.jpg",
+            category: "starters"
+        },
+        {
+            id: 9,
+            name: "Palak Paneer",
+            description: "Cottage cheese cubes in a creamy spinach gravy flavored with aromatic spices.",
+            price: 219,
+            image: "images/palak-paneer.jpg",
+            category: "main-course"
+        },
+        {
+            id: 10,
+            name: "Garlic Naan",
+            description: "Soft Indian bread topped with garlic and butter, baked in a tandoor.",
+            price: 69,
+            image: "images/garlic-naan.jpg",
+            category: "breads"
+        },
+        {
+            id: 11,
+            name: "Rasgulla",
+            description: "Soft and spongy cottage cheese balls soaked in sugar syrup.",
+            price: 89,
+            image: "images/rasgulla.jpg",
+            category: "desserts"
+        },
+        {
+            id: 12,
+            name: "Mango Lassi",
+            description: "Refreshing yogurt-based drink made with ripe mangoes and a hint of cardamom.",
+            price: 79,
+            image: "images/mango-lassi.jpg",
+            category: "beverages"
+        }
+    ];
+}
 
 // Display menu items
 function displayMenuItems(category = 'all') {
@@ -155,18 +208,21 @@ function displayMenuItems(category = 'all') {
 
 // Filter menu by category
 function filterMenu() {
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const category = this.getAttribute('data-category');
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    if (categoryButtons) {
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const category = this.getAttribute('data-category');
 
-            // Update active button
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
 
-            currentCategory = category;
-            displayMenuItems(category);
+                currentCategory = category;
+                displayMenuItems(category);
+            });
         });
-    });
+    }
 }
 
 // Add item to cart
@@ -310,7 +366,10 @@ function toggleCart() {
 
 // Event Listeners
 window.addEventListener('DOMContentLoaded', () => {
-    displayMenuItems();
+    // Fetch menu items first
+    fetchMenuItems();
+
+    // Setup other event listeners
     filterMenu();
 
     cartBtn.addEventListener('click', toggleCart);

@@ -22,7 +22,6 @@
           <button class="btn" id="cart-btn">
             <i class="fas fa-shopping-cart"></i> Cart (0)
           </button>
-          <button class="btn">Sign In</button>
         </div>
       </div>
     </header>
@@ -37,8 +36,10 @@
     <section class="menu">
       <div class="container">
         <h2 class="section-title">Our Menu</h2>
+
         <div id="menu-container">
           <!-- Menu items will be dynamically added here -->
+          <div class="loading-spinner">Loading menu...</div>
         </div>
       </div>
     </section>
@@ -93,6 +94,9 @@
       </div>
     </footer>
 
+    <!-- Load configuration file first -->
+    <script src="js/config.js"></script>
+    <!-- Then load the main script -->
     <script src="js/script.js"></script>
   </body>
 </html>
