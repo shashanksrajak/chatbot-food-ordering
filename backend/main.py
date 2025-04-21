@@ -3,6 +3,7 @@ from datetime import date
 from typing import Annotated
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 import helpers
@@ -51,6 +52,18 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 # fastAPI app initalization
 app = FastAPI()
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -207,7 +220,7 @@ def complete_order(session_id: str):
 
 def main():
     print("Hello from backend!")
-    uvicorn.run(app, host="0.0.0.0", port=7001)
+    uvicorn.run(app, host="0.0.0.0", port=9001)
 
 
 if __name__ == "__main__":
