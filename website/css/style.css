@@ -80,8 +80,7 @@ header p {
 
 /* Hero Section */
 .hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("../images/hero-bg.jpg");
+  background-color: #c62838;
   background-size: cover;
   background-position: center;
   color: white;
@@ -364,7 +363,9 @@ footer {
 }
 
 .footer-content {
-  display: grid;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
   margin-bottom: 30px;
@@ -388,6 +389,29 @@ footer {
 
 .social-icons a:hover {
   color: var(--secondary-color);
+}
+
+.website-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.website-links a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+}
+
+.website-links a:hover {
+  color: white;
+  transform: translateY(-3px);
+  text-decoration: underline;
 }
 
 .copyright {
